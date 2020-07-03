@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+}
+.dialogs {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.messages {
+    margin-top: 20px;
+    margin-left: 100px;
+}
+
+

@@ -1,0 +1,10 @@
+.dialogItem {
+    margin-bottom: 20px;
+}
+.dialogItem a {
+    color: #000;
+    text-decoration: none;
+} 
+.dialogItem .active {
+    color: green;
+}

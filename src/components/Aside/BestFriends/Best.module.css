@@ -1,0 +1,22 @@
+.bestList {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+    padding: 0;
+    list-style: none;
+}
+.bestItem {
+    color: #fff;
+}
+.circle {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    background-color: rgb(89, 151, 231);
+    border-radius: 100%;
+}
+a {
+    text-decoration: none;
+    color: white;
+}

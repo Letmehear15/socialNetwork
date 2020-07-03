@@ -1,0 +1,12 @@
+.App {
+    width: 1200px;
+    margin: auto;
+}
+.container {
+    display: flex;
+    height: 85vh;
+}
+
+
+
+
