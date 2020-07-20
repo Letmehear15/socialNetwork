@@ -4,7 +4,7 @@ import {addPostActionCreater, addNewPostActionCreater} from '../../../redux/redu
 
 const MapStateToProps = (state) => {
     return {msg: state.profilePage}
-    
+  
 }
 const MapDispatchToProps = (dispatch) => {
     return {

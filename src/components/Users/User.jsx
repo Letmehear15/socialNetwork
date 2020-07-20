@@ -1,17 +1,31 @@
 import React from 'react'; 
 import c from './Users.module.css'
 import userLogo from '../../img/user.png';
+import { NavLink } from 'react-router-dom';
 
-const User = ({follow, unFollow, users, pageCount, onPageUsers, currentPage, onChoose}) => {
-
-        let pages = Math.ceil( (pageCount - 4900)/onPageUsers)
+const User = ({users, pageCount, onPageUsers, currentPage, onChoose, isDisabledBtn, getFollow, getUnfollow}) => {
+        let pages = Math.ceil( (pageCount - 5250)/onPageUsers)
         let items = users.map(user => {
             return <div className={c.item}>
                         <div className={c.leftSide}>
                             <div className={c.avatarImg}>
-                                <img src={user.photos.small? user.photos.small:userLogo} alt="avatar"/>
+                                <NavLink to={`/profile/${user.id}`}>
+                                    <img src={user.photos.small? user.photos.small:userLogo} alt="avatar"/>
+                                </NavLink>
                             </div>
-                            {user.followed?<button className={c.btn} onClick={() => unFollow(user.id)}>Unfollow</button>:<button className={c.btn} onClick={() => follow(user.id)}>Follow</button>}
+                            {user.followed
+                                ?<button 
+                                    disabled={isDisabledBtn.some(el => el === user.id)} 
+                                    className={c.btn} 
+                                    onClick={() => getUnfollow(user.id)}>
+                                    Unfollow
+                                 </button>
+                                :<button 
+                                    disabled={isDisabledBtn.some(el => el === user.id)} 
+                                    className={c.btn} 
+                                    onClick={() => getFollow(user.id)}>
+                                    Follow
+                                </button>}
                         </div>
                         <div className={c.rightSide}>
                             <div className={c.itemLeft}>
@@ -36,7 +50,7 @@ const User = ({follow, unFollow, users, pageCount, onPageUsers, currentPage, onC
             }
         }
 
-        let newCount = count.map(el => {
+        let newCount = count.map((el) => {
             return(
                 <span 
                     className={`${c.num} ${currentPage === el ? c.active : null}`}
