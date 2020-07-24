@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import Login from './components/Login/Login';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/news' component={News}/>
           <Route path='/music' component={Music}/>
           <Route path='/settings' component={Settings}/>
+          <Route path="/login" component={Login}/>
         </div>
       </div>
     </Router>

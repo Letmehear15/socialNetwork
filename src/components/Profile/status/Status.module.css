@@ -1,0 +1,14 @@
+.status {
+    margin-top: 20px;
+    width: 300px;
+}
+.statusText span:hover {
+    background-color: rgb(184, 184, 184);
+    cursor: pointer;
+}
+
+.statusInput input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid rgb(194, 194, 194);
+}

@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import User from './User'
 import Loader from '../Loader/Loader'
-import {setPageCount, setCurrentPage, setIsDisabled, getUsers, getFollow, getUnfollow} from '../../redux/reducers/UsersReducer';
+import {setPageCount, setCurrentPage, getUsers, getFollow, getUnfollow} from '../../redux/reducers/UsersReducer';
+import { withAuthRedirect } from '../../hoc/authRedirect';
+import { compose } from 'redux';
 
 class UsersContainer extends Component  {
 
@@ -16,7 +18,7 @@ class UsersContainer extends Component  {
     }
 
     render() {
-        const {users, pageCount, onPageUsers, currentPage, isFetching, setIsDisabled, isDisabledBtn, isDisabled, getFollow, getUnfollow} = this.props;
+        const {users, pageCount, onPageUsers, currentPage, isFetching, isDisabledBtn, isDisabled, getFollow, getUnfollow} = this.props;
         if(isFetching) return <Loader/>
         return(
             <User 
@@ -44,5 +46,7 @@ const mapStateToProps = (state) => {
         isDisabled: state.usersPage.isDisabled,
     }
 }
-
-export default connect( mapStateToProps,{ setPageCount, setCurrentPage, getUnfollow, getUsers, setIsDisabled, getFollow})(UsersContainer);
+ export default compose(
+    connect( mapStateToProps,{ setPageCount, setCurrentPage, getUnfollow, getUsers, getFollow}),
+    withAuthRedirect
+)(UsersContainer)

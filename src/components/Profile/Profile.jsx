@@ -1,14 +1,14 @@
 import React from 'react';
-import PostsContainer from './posts/PostsContainer'
-import Info from './info/Info'
-import Image from './mainImg/MainImg'
+import PostsContainer from './posts/PostsContainer';
+import Info from './info/Info';
+import Status from './status/Status'
 import './Main.module.css';
 
-const Profile = ({profile}) => {
+const Profile = ({profile, status, changeStatus}) => {
     return (
         <main>
-            <Image/>
             <Info profile={profile}/>
+            <Status status={status} changeStatus={changeStatus}/>
             <PostsContainer/>
         </main>  
     )
