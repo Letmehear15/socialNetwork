@@ -1,0 +1,39 @@
+.mainForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.mainForm div {
+    margin-bottom: 10px;
+}
+
+.mail,
+.pass {
+    padding: 10px;
+    border: 1px solid rgb(209, 209, 209);
+}
+
+.check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    display: block;
+    width: 100px;
+    height: 30px;
+    background-color: rgb(107, 207, 137);
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 1px 1px 2px black;
+}
+
+.commonError span {
+    color: red;
+}

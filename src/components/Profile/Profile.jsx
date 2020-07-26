@@ -1,14 +1,12 @@
 import React from 'react';
 import PostsContainer from './posts/PostsContainer';
 import Info from './info/Info';
-import Status from './status/Status'
 import './Main.module.css';
 
-const Profile = ({profile, status, changeStatus}) => {
+const Profile = (props) => {
     return (
         <main>
-            <Info profile={profile}/>
-            <Status status={status} changeStatus={changeStatus}/>
+            <Info {...props}/>
             <PostsContainer/>
         </main>  
     )

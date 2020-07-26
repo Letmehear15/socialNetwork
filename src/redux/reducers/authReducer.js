@@ -1,11 +1,12 @@
 import {authAPI} from '../../api/api'
+import { stopSubmit } from 'redux-form';
 
 const ISAUTH = 'ISAUTH';
 
 const initialState = {
-    id:null,
-    email:null,
-    login:null,
+    id: null,
+    email: null,
+    login: null,
     isAuth: false
 }
 
@@ -23,7 +24,7 @@ export const authReducer = (state = initialState, action) => {
     }
 }
 
-export const auth = (prop,{id, login, email}) => {
+const auth = (prop,{id, login, email}) => {
     return {
         type: ISAUTH,
         prop,
@@ -38,4 +39,25 @@ export const getAuth = () => (dispatch) => {
                 dispatch(auth(true, data.data));
             }
         })
+}
+
+export const login = ({email, password, isRemember}) => (dispatch) => {
+    authAPI.getLogin(email, password, isRemember)
+    .then(res => {
+        debugger
+        if(res.resultCode === 0 ) {
+            dispatch(getAuth())
+        } else {
+            dispatch(stopSubmit('login', {_error:`${res.messages[0]}`}))
+        }
+    })
+}
+
+export const logout = () => (dispatch) => {
+    authAPI.getLogout()
+    .then(res => {
+        if(res.resultCode === 0 ) {
+            dispatch(auth(false,{id: null, login: null, email: null}))
+        }
+    })
 }

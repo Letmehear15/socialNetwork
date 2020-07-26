@@ -14,26 +14,16 @@ const partOfState = {
         {id: 2, name: "Lina"},
         {id: 3, name: "Serg"},
         {id: 4, name: "Leva"}
-    ],
-    newMessage: ''
+    ]
 }
 
 export const addNewMsg = (state = partOfState, action) => {
 
     switch(action.type) {
-        case 'NEW_MSG': {
-            let newState = {
-                ...state,
-                messages: [...state.messages],
-                newMessage: action.text
-            }
-            return newState;
-            
-        }
         case 'ADD_MSG': {
             let a = {
                 id: 10,
-                msg: state.newMessage
+                msg: action.text
             }
             let newMessage = {
                 ...state,
@@ -47,9 +37,9 @@ export const addNewMsg = (state = partOfState, action) => {
     }
 };
 
-export const addMsgActionCreater = () => {
-    return {type: ADD_MSG}
-}
-export const addNewMsgActionCreater = (text) => {
-    return {type: NEW_MSG, text}
+export const addMsgActionCreater = (text) => {
+    return {
+        type: ADD_MSG, 
+        text
+    }
 }

@@ -1,0 +1,14 @@
+.input {
+    border: 2px solid red !important;
+}
+.error {
+    display: block;
+    color: red;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.common {
+    padding: 10px;
+    border: 1px solid rgb(209, 209, 209);
+}

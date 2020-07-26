@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './Info.module.css';
 import userLogo from '../../../img/user.png';
+import Status from '../status/Status'
 
-const Info = ({profile}) => {
-    const{aboutMe, contacts, lookingForAJob, fullName, photos} = profile;
+const Info = ({profile, status, changeStatus}) => {
+    const{aboutMe, fullName, photos} = profile;
     return (
         <div className={classes.info}>
             <div className={classes.img}>
@@ -12,6 +13,7 @@ const Info = ({profile}) => {
 
             <div className={classes.about}>
                 <span className={classes.name}>{fullName}</span>
+                <Status status={status} changeStatus={changeStatus}/>
                 <span>{aboutMe}</span>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import {auth, getAuth} from '../../redux/reducers/authReducer'
+import {getAuth, logout} from '../../redux/reducers/authReducer'
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -24,4 +24,4 @@ const mapStateToProps = (state)=> {
         email: state.authMe.email,
     }
 }
-export default connect(mapStateToProps,{auth, getAuth})(HeaderContainer)
+export default connect(mapStateToProps,{getAuth, logout})(HeaderContainer)

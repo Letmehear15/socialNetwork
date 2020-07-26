@@ -4,7 +4,7 @@ import userLogo from '../../img/user.png';
 import { NavLink } from 'react-router-dom';
 
 const User = ({users, pageCount, onPageUsers, currentPage, onChoose, isDisabledBtn, getFollow, getUnfollow}) => {
-        let pages = Math.ceil( (pageCount - 5250)/onPageUsers)
+        let pages = Math.ceil( (pageCount - 5390)/onPageUsers)
         let items = users.map(user => {
             return <div className={c.item}>
                         <div className={c.leftSide}>

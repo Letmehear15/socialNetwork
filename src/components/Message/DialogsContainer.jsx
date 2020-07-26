@@ -11,19 +11,8 @@ const MapStateToProps = (state) => {
         messages: state.messagePage
     }
 }
-const MapDispatchToProps = (dispatch) => {
-    return {
-        sendMsg: () => {
-            dispatch(addMsgActionCreater());
-            dispatch(addNewMsgActionCreater(''));
-        },
-        textMsg: (text) => {
-            dispatch(addNewMsgActionCreater(text));
-        }
-    }
-}
 
 export default compose(
-    connect(MapStateToProps, MapDispatchToProps),
+    connect(MapStateToProps, {addMsgActionCreater}),
     withAuthRedirect
 )(Message)

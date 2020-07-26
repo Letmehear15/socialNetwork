@@ -1,29 +1,40 @@
 import React from 'react';
 import classes from './Posts.module.css';
 import Mypost from './Mypost/Mypost';
+import {Field, reduxForm} from 'redux-form'
+import { required, maxLength } from '../../../utils/Validate';
+import { ValidateInfoTextArea } from '../../ValidateInfo/ValidateInfo';
+
+const maxInputLength = maxLength(20);
+
+const FormPost = (props) => {
+    return(
+        <form onSubmit={props.handleSubmit}>
+            <Field 
+                placeholder="Write a post"
+                name="post" 
+                component={ValidateInfoTextArea} 
+                type="text"
+                validate={[required, maxInputLength]}/>
+            <button>Send</button>
+        </form>
+    )
+}
+
+const FormReduxPost = reduxForm({form:'post'})(FormPost)
 
 const Posts = (props) => {
     let postInfo = props.msg.posts.map( post => <Mypost key={post.id} message={post.post}/> );
-    let myRef = React.createRef();
 
-    function changeText() {
-        let text = myRef.current.value;
-        props.changeText(text);
+    function changeText(value) {
+        props.addPostActionCreater(value.post);
     }
 
     return (
         <div className="posts"> 
             <div className={classes.newpost}>
                 <h2>My posts</h2>
-                <textarea 
-                    type="text" 
-                    ref={myRef} 
-                    value={props.msg.changePost} 
-                    onChange={changeText}/>
-                <input 
-                    type="submit" 
-                    onClick={props.newPost} 
-                    value="send"/>
+                <FormReduxPost onSubmit={changeText}/>
             </div>
             {postInfo}
         </div>
