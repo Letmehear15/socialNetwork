@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     width: 90%;
     color: grey;
 }
@@ -63,12 +64,47 @@
     background-color: rgb(82, 155, 104);
 }
 
+.pagWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 550px;
+}
+
+.pagWrapper button{
+    display: block;
+    width: 66px;
+    height: 30px;
+    background-color: rgb(107, 207, 137);
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 2px 2px 3px black;
+}
+
+
+.pagWrapper button:disabled {
+    box-shadow:
+    0 0 1px rgba(0,0,0,.5) inset,
+    0 2px 3px rgba(0,0,0,.5) inset,
+    0 1px 1px rgba(255,255,255,.1);
+}
 .active {
     font-weight: bold;
 }
 
 .num {
     margin-right: 10px;
+    margin-left: 10px;
     cursor: pointer;
+    font-size: 18px;
 }
+
+.hide {
+    display: none;
+}
+
 

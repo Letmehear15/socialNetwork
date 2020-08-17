@@ -1,5 +1,4 @@
 const ADD_POST = 'ADD_POST';
-const NEW_POST = 'NEW_POST';
 
 const partOfState = {
     posts: [

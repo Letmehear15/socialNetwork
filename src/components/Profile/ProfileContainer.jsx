@@ -1,40 +1,38 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Profile from './Profile';
 import Load from '../Loader/Loader'
 import { connect } from 'react-redux';
-import {getUser, setIsFetching, getProfile, getStatus, changeStatus} from '../../redux/reducers/profileReducer';
+import {getUser, getProfile, getStatus, changeStatus, changePhoto, updateProfile} from '../../redux/reducers/profileReducer';
+import {getProfileSelector, getStatusSelector} from '../../redux/selectors/profileSelector'
 import {withAuthRedirect} from '../../hoc/authRedirect'
 import { withRouter} from "react-router";
 import { compose } from 'redux';
 
-class ProfileContainer extends Component {
+const ProfileContainer = (props) => {
 
-    componentDidMount() {
-        let {id} = this.props.match.params;
-        if(!id) id = this.props.myId
-        this.props.getProfile(id);
-        this.props.getStatus(id);
-    }
-
-    render() {
-        if(this.props.profile.length === 0 ) return <Load/>;
-        return <Profile profile={this.props.profile} {...this.props}/>;
-        
-    }
+    useEffect(() => {
+        let {id} = props.match.params;
+        if(!id) id = props.myId
+        props.getProfile(id);
+        props.getStatus(id);
+    },[])
+    
+    if(props.isFetching) return <Load/>;
+    return <Profile {...props}/>;
 }
 
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profileUser.profile,
+        profile: getProfileSelector(state),
         isFetching: state.profileUser.isFetching,
-        status: state.profileUser.status,
+        status: getStatusSelector(state),
         myId: state.authMe.id
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {getUser, setIsFetching, getProfile, getStatus, changeStatus} ),
+    connect(mapStateToProps, {getUser, getProfile, getStatus, changeStatus, changePhoto, updateProfile} ),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)

@@ -18,6 +18,11 @@
     color: #fff;
 }
 
+.login a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .logout {
     display: block;
     margin-top: 5px;

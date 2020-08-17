@@ -5,10 +5,10 @@ export const ValidateInfoTextArea = ({input, meta, placeholder}) => {
     const{touched, error} = meta;
     return (
         <div>
-            <textarea className={touched&&error&&c.input}
+            <textarea className={touched&&error?c.input:''}
                 {...input} 
                 placeholder={placeholder}/>
-            {touched && error && <span className={c.error}>{error}</span>}
+            {touched && error? <span className={c.error}>{error}</span>:null}
         </div>
     )
 }

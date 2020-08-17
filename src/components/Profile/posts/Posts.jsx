@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import classes from './Posts.module.css';
 import Mypost from './Mypost/Mypost';
 import {Field, reduxForm} from 'redux-form'
@@ -41,4 +41,4 @@ const Posts = (props) => {
     )
 }
 
-export default Posts;
+export default memo(Posts);

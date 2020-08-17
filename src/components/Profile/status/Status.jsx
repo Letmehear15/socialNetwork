@@ -1,58 +1,48 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import c from './Status.module.css'
 
-class Status extends React.Component {
-    state = {
-        editModal: false,
-        status: this.props.status
+const Status = (props) => {
+
+    const [editModal, setModal] = useState(false);
+    const [status, setStatus] = useState(props.status);
+
+    useEffect(()=> {
+        setStatus(props.status)
+    }, [props.status])
+
+    const onModalShow = () => {
+        setModal(true)
     }
 
-    onModalShow = () => {
-        this.setState({
-            editModal: !this.state.editModal
-        })
+    const deactivateModal = () => {
+        setModal(false)
+        props.changeStatus(status)
     }
 
-    deactivateModal = () => {
-        this.props.changeStatus(this.state.status)
+    const onChangeText = (e) => {
+        setStatus(e.target.value)
     }
-
-    onChangeText = (e) => {
-        this.setState({
-            status: e.target.value
-        })
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.status !== this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
-
-    render() {
-        return (
-            <div className={c.status}>
-                {!this.state.editModal &&
-                    <div className={c.statusText}>
-                        <span onDoubleClick={this.onModalShow}>{this.props.status || '-----'}</span>
-                    </div>
-                }
-                
-                {this.state.editModal &&
-                    <div className={c.statusInput}>
-                        <input 
-                            autoFocus  
-                            onBlur={() => {this.onModalShow(); this.deactivateModal()}} 
-                            type="text" 
-                            value={this.state.status}
-                            onChange={(e) => this.onChangeText(e)}/>
-                    </div>  
-                }
-            </div>
-        )
-    }   
+    return (
+        <div className={c.status}>
+            {!editModal &&
+                <div className={c.statusText}>
+                    <span onDoubleClick={onModalShow}>{props.status || '-----'}</span>
+                </div>
+            }
+            
+            {editModal &&
+                <div className={c.statusInput}>
+                    <input 
+                        autoFocus  
+                        onBlur={ deactivateModal} 
+                        type="text" 
+                        value={status}
+                        onChange={(e) => onChangeText(e)}/>
+                </div>  
+            }
+        </div>
+    )
+       
 }
 
 export default Status

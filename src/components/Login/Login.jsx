@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { login } from '../../redux/reducers/authReducer';
@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import c from './Login.module.css';
 import { ValidateInfoInput } from '../ValidateInfo/ValidateInfo';
 import { required } from '../../utils/Validate';
+import {getAuthSelector} from '../../redux/selectors/authSelector';
 
 const Form = (props) => {
     const{handleSubmit} = props;
@@ -46,28 +47,26 @@ const ContactForm = reduxForm({
     form: 'login'
   })(Form)
 
-class LoginContainer extends Component {
-    onSubmit = (result) => {
+const LoginContainer = (props) => {
+    const onSubmit = (result) => {
         if(result.isRemember === undefined) result.isRemember = false;
-        this.props.login(result)
+        props.login(result)
     }
 
-    render() {
-        if(this.props.isAuth) {
-            return <Redirect to="/profile"/>
-        }
-        return (
-            <div>
-                <h1>Login</h1>
-                <ContactForm onSubmit={this.onSubmit}/>
-            </div>
-        )
+    if(props.isAuth) {
+        return <Redirect to="/profile"/>
     }
+    return (
+        <div>
+            <h1>Login</h1>
+            <ContactForm onSubmit={onSubmit}/>
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.authMe.isAuth
+        isAuth: getAuthSelector(state)
     }
 }
 

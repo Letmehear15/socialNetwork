@@ -23,19 +23,13 @@ export const userReducer = (state = initialState, action) => {
         case FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
-                    if(user.id === action.userId) return {...user, followed: true}
-                    return user;
-                })
+                users: followInfollow(state.users, action.userId, true)
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
-                    if(user.id === action.userId) return {...user, followed: false}
-                    return user;
-                })
+                users: followInfollow(state.users, action.userId, false)
             }
         }
         case SETUSERS: {
@@ -74,9 +68,14 @@ export const userReducer = (state = initialState, action) => {
             return state;
     }
 }
+const followInfollow = (state, userId, prop) => {
+    return state.map(user => {
+        if(user.id === userId) return {...user, followed: prop}
+        return user;
+    })
+}
 
 export const follow = (userId) => {
-    debugger
     return {
         type: FOLLOW,
         userId
@@ -120,32 +119,26 @@ export const setIsDisabled = (userId,prop) => {
     }
 }
 
-export const getUsers = (onPageUsers, currentPage) => (dispatch) => {
+export const getUsers = (onPageUsers, currentPage) => async (dispatch) => {
     dispatch(setIsFetching(true));
-        usersAPI.getUsers(onPageUsers, currentPage)
-        .then(data => {
-            dispatch(setIsFetching(false))
-            dispatch(setPageCount(data.totalCount));
-            dispatch(setUsers(data.items));
-        })
+    const data = await usersAPI.getUsers(onPageUsers, currentPage)
+    dispatch(setIsFetching(false))
+    dispatch(setPageCount(data.totalCount));
+    dispatch(setUsers(data.items));
 }
-export const getFollow = (userId) => (dispatch) => {
+export const getFollow = (userId) => async (dispatch) => {
     dispatch(setIsDisabled(userId, true));
-    usersAPI.followUsers(userId,{})
-    .then(data => {
-        if(data.resultCode == 0) {
-            dispatch(follow(userId));
-            dispatch(setIsDisabled(userId, false));
-        }
-    })
+    const data = await usersAPI.followUsers(userId,{})
+    if(data.resultCode === 0) {
+        dispatch(follow(userId));
+        dispatch(setIsDisabled(userId, false));
+    }
 }
-export const getUnfollow = (userId) => (dispatch) => {
+export const getUnfollow = (userId) => async (dispatch) => {
     dispatch(setIsDisabled(userId, true));
-    usersAPI.unfollowUsers(userId,{})
-    .then(data => {
-        if(data.resultCode == 0) {
-            dispatch(unFollow(userId));
-            dispatch(setIsDisabled(userId, false));
-        }
-    })
+    const data = await usersAPI.unfollowUsers(userId,{});
+    if(data.resultCode === 0) {
+        dispatch(unFollow(userId));
+        dispatch(setIsDisabled(userId, false));
+    }
 }

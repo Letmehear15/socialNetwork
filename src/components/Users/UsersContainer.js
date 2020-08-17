@@ -1,52 +1,56 @@
-import React, {Component} from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux';
-import User from './User'
-import Loader from '../Loader/Loader'
-import {setPageCount, setCurrentPage, getUsers, getFollow, getUnfollow} from '../../redux/reducers/UsersReducer';
-import { withAuthRedirect } from '../../hoc/authRedirect';
+import {setCurrentPage, getUsers, getFollow, getUnfollow} from '../../redux/reducers/UsersReducer';
 import { compose } from 'redux';
+import {getAuthSelector} from '../../redux/selectors/authSelector';
+import {
+    getUsersSelector, 
+    getPageCountSelector, 
+    getCurrentPageSelector, 
+    getOnPageUsersSelector
+} from '../../redux/selectors/usersSelector';
+import Users from './Users';
 
-class UsersContainer extends Component  {
+const UsersContainer = (props) =>  {
 
-    componentDidMount() {
-        this.props.getUsers(this.props.onPageUsers, this.props.currentPage)
+    useEffect(() => {
+        props.getUsers(props.onPageUsers, props.currentPage)
+    },[])
+
+    const onChoose = (el) => {
+        props.setCurrentPage(el)
+        props.getUsers(props.onPageUsers, el)
     }
 
-    onChoose = (el) => {
-        this.props.setCurrentPage(el)
-        this.props.getUsers(this.props.onPageUsers, el)
-    }
-
-    render() {
-        const {users, pageCount, onPageUsers, currentPage, isFetching, isDisabledBtn, isDisabled, getFollow, getUnfollow} = this.props;
-        if(isFetching) return <Loader/>
-        return(
-            <User 
-                getUnfollow={getUnfollow} 
-                users={users} 
-                pageCount={pageCount} 
-                onPageUsers={onPageUsers} 
-                currentPage={currentPage}
-                onChoose={this.onChoose}
-                isDisabledBtn={isDisabledBtn}
-                isDisabled={isDisabled}
-                getFollow={getFollow}/>
-        )
-    }
+    const {users, pageCount, onPageUsers, currentPage, isFetching, isDisabledBtn, isDisabled, getFollow, getUnfollow, isAuth} = props;
+    return(
+        <Users 
+            getUnfollow={getUnfollow} 
+            users={users} 
+            pageCount={pageCount} 
+            onPageUsers={onPageUsers} 
+            currentPage={currentPage}
+            onChoose={onChoose}
+            isDisabledBtn={isDisabledBtn}
+            isDisabled={isDisabled}
+            getFollow={getFollow}
+            isAuth={isAuth}
+            isFetching={isFetching}/>
+    )
 }
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageCount: state.usersPage.pageCount,
-        onPageUsers: state.usersPage.onPageUsers,
-        currentPage: state.usersPage.currentPage,
+        users: getUsersSelector(state),
+        pageCount: getPageCountSelector(state),
+        onPageUsers: getOnPageUsersSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isAuth: getAuthSelector(state),
         isFetching: state.usersPage.isFetching,
         isDisabledBtn: state.usersPage.isDisabledBtn,
         isDisabled: state.usersPage.isDisabled,
     }
 }
  export default compose(
-    connect( mapStateToProps,{ setPageCount, setCurrentPage, getUnfollow, getUsers, getFollow}),
-    withAuthRedirect
+    connect( mapStateToProps,{setCurrentPage, getUnfollow, getUsers, getFollow}),
 )(UsersContainer)

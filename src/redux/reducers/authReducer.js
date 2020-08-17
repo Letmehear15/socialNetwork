@@ -33,7 +33,7 @@ const auth = (prop,{id, login, email}) => {
 }
 
 export const getAuth = () => (dispatch) => {
-    authAPI.getAuth()
+    return authAPI.getAuth()
         .then(data => {
             if(data.resultCode === 0) {
                 dispatch(auth(true, data.data));
@@ -44,7 +44,6 @@ export const getAuth = () => (dispatch) => {
 export const login = ({email, password, isRemember}) => (dispatch) => {
     authAPI.getLogin(email, password, isRemember)
     .then(res => {
-        debugger
         if(res.resultCode === 0 ) {
             dispatch(getAuth())
         } else {

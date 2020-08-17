@@ -1,4 +1,3 @@
-const NEW_MSG = 'NEW_MSG';
 const ADD_MSG = 'ADD_MSG';
 
 const partOfState = {

@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { memo } from 'react';
 import classes from './Info.module.css';
 import userLogo from '../../../img/user.png';
-import Status from '../status/Status'
+import { useState } from 'react';
+import Loader from '../../Loader/Loader';
+import { useEffect } from 'react';
 
-const Info = ({profile, status, changeStatus}) => {
-    const{aboutMe, fullName, photos} = profile;
+const Info = memo(({profile, changePhoto, params}) => {
+    const{photos} = profile;
+
+    const [isLoad, setLoad] = useState(false);
+    const [onMouse, setOnMouse] = useState(false)
+    useEffect(() => setLoad(false),[photos.large])
+
+    const onSave = (e) => {
+        if(e.target.files.length) {
+            setLoad(true)
+            changePhoto(e.target.files[0])
+        }
+    }
     return (
         <div className={classes.info}>
-            <div className={classes.img}>
-                <img src={photos.large?photos.large:userLogo}/>
-            </div>
+            <div className={classes.left}>
+                {isLoad&&<Loader/>}
+                {!isLoad&&
+                    <div 
+                        className={classes.img} 
+                        onMouseEnter={() => setOnMouse(true)}
+                        onMouseLeave={() => setOnMouse(false)}
+                    >
+                        <img src={photos.large?photos.large:userLogo} alt='largePhoto'/>
+                        <input className={classes.upLoad} id="upload" type="file" onChange={onSave}/>
 
-            <div className={classes.about}>
-                <span className={classes.name}>{fullName}</span>
-                <Status status={status} changeStatus={changeStatus}/>
-                <span>{aboutMe}</span>
+                        <div className={params.id?classes.none:''}>
+                            <label 
+                                htmlFor="upload" 
+                                className={`${classes.labelUpload} ${onMouse?classes.active:''}`}>
+                                    Upload Photo
+                            </label>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     )
-}
+})
 
 export default Info;

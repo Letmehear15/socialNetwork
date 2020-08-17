@@ -4,6 +4,7 @@ import {addNewPost} from './reducers/addNewPostReducer';
 import {userReducer} from './reducers/UsersReducer';
 import {profileReducer} from './reducers/profileReducer';
 import {authReducer} from './reducers/authReducer';
+import {initializationReducer} from './reducers/initializationReducer';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
@@ -14,6 +15,7 @@ let reducers = combineReducers({
     profileUser: profileReducer,
     authMe: authReducer,
     form: formReducer,
+    init: initializationReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunk));
