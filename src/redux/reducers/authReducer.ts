@@ -4,13 +4,15 @@ import { stopSubmit } from 'redux-form';
 const ISAUTH = 'ISAUTH';
 
 const initialState = {
-    id: null,
-    email: null,
-    login: null,
+    id: null as null | number,
+    email: null as null | string,
+    login: null as null | string,
     isAuth: false
 }
 
-export const authReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+export const authReducer = (state = initialState, action:any):InitialStateType => {
     switch(action.type) {
         case ISAUTH: {
             return {
@@ -24,7 +26,18 @@ export const authReducer = (state = initialState, action) => {
     }
 }
 
-const auth = (prop,{id, login, email}) => {
+type AuthTypeData = {
+    id:number|null, 
+    login:string|null, 
+    email: string|null
+}
+type AuthType = {
+    type: typeof ISAUTH,
+    prop: boolean,
+    data: AuthTypeData
+}
+
+const auth = (prop:boolean,{id, login, email}:AuthTypeData):AuthType => {
     return {
         type: ISAUTH,
         prop,
@@ -32,7 +45,7 @@ const auth = (prop,{id, login, email}) => {
     }
 }
 
-export const getAuth = () => (dispatch) => {
+export const getAuth = () => (dispatch:any) => {
     return authAPI.getAuth()
         .then(data => {
             if(data.resultCode === 0) {
@@ -41,7 +54,12 @@ export const getAuth = () => (dispatch) => {
         })
 }
 
-export const login = ({email, password, isRemember}) => (dispatch) => {
+type LoginPropType = {
+    email: string, 
+    password: string, 
+    isRemember: string
+}
+export const login = ({email, password, isRemember}: LoginPropType) => (dispatch:any) => {
     authAPI.getLogin(email, password, isRemember)
     .then(res => {
         if(res.resultCode === 0 ) {
@@ -52,7 +70,7 @@ export const login = ({email, password, isRemember}) => (dispatch) => {
     })
 }
 
-export const logout = () => (dispatch) => {
+export const logout = () => (dispatch:any) => {
     authAPI.getLogout()
     .then(res => {
         if(res.resultCode === 0 ) {

@@ -18,7 +18,8 @@ const EditDescr = memo(
                 </div>
             )
         })
-    
+        const {error} = props;
+        debugger
         return (
             <form onSubmit={handleSubmit} className={classes.contacts}>
                 <div className={classes.aboutMe}>
@@ -30,7 +31,7 @@ const EditDescr = memo(
                     <Field name="lookingForAJobDescription" component="textarea" type="text" placeholder="Looking for a job description"/>
                 </div>
                 {contactItems}
-                {props.error? <span>Error</span>:null}
+                {error? <span>Error</span>:null}
                 <button className={classes.btn}>Save</button>
                 <button className={classes.btn} onClick={() => setEditMode(false)}>Cancel</button>
             </form>

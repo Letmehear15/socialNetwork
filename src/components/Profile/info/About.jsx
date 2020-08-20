@@ -49,11 +49,11 @@ const AboutUser = ({contacts, aboutMe, setEditMode, lookingForAJobDescription, p
     return (
         <div className={classes.contacts}>
             <div className={classes.aboutMe}>
-                <span className={classes.title}> <b>About me</b>: </span>
+                <span className={classes.title}> About me: </span>
                 <span className={classes.aboutMeDescr}>{aboutMe}</span>
             </div>
             <div className={classes.aboutLinks}>
-                <span className={classes.title}> <b>Looking for a job description: </b> </span>
+                <span className={classes.title}> Looking for a job description: </span>
                 <span className={classes.aboutMeDescr}>{lookingForAJobDescription}</span>
             </div>
             {contactItems}

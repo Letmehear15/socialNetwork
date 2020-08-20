@@ -1,4 +1,5 @@
 import {usersAPI} from '../../api/api'
+import { UserType } from './types';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -9,16 +10,18 @@ const SETISFETCHING = 'SETISFETCHING';
 const SETDISABLED = 'SETDISABLED';
 
 const initialState = {
-    users: [],
+    users: [] as Array<UserType>,
     pageCount: 0,
     onPageUsers: 5,
     currentPage: 1,
     isFetching: true,
     isDisabled: false,
-    isDisabledBtn: []
+    isDisabledBtn: [] as Array<number>
 };
 
-export const userReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+export const userReducer = (state = initialState, action: any):InitialStateType => {
     switch(action.type) {
         case FOLLOW: {
             return {
@@ -68,50 +71,86 @@ export const userReducer = (state = initialState, action) => {
             return state;
     }
 }
-const followInfollow = (state, userId, prop) => {
+
+const followInfollow = (state:Array<UserType>, userId: number, prop:boolean):Array<UserType> => {
     return state.map(user => {
         if(user.id === userId) return {...user, followed: prop}
         return user;
     })
 }
 
-export const follow = (userId) => {
+type FollowType = {
+    type: typeof FOLLOW,
+    userId:number
+}
+export const follow = (userId:number):FollowType => {
     return {
         type: FOLLOW,
         userId
     }
 }
-export const unFollow = (userId) => {
+
+type UnFollowType = {
+    type: typeof UNFOLLOW,
+    userId:number
+}
+export const unFollow = (userId:number):UnFollowType => {
     return {
         type: UNFOLLOW,
         userId
     }
 }
-export const setUsers = (users) => {
+
+type SetUsersType = {
+    type: typeof SETUSERS,
+    users:UserType
+}
+export const setUsers = (users:UserType):SetUsersType => {
     return {
         type: SETUSERS,
         users
     }
 }
-export const setPageCount = (pageCount) => {
+
+type SetPageCountType = {
+    type: typeof SETPAGECOUNT,
+    pageCount: number
+}
+export const setPageCount = (pageCount:number):SetPageCountType => {
     return {
         type: SETPAGECOUNT,
         pageCount
     }
 }
-export const setCurrentPage = (page) => {
+
+type CurrentPageType = {
+    type: typeof SETCURRENTPAGE,
+    page: number
+}
+export const setCurrentPage = (page:number):CurrentPageType=> {
     return {
         type: SETCURRENTPAGE,
         page
     }
 }
-export const setIsFetching = (isFetching) => {
+
+type IsFetchingType = {
+    type: typeof SETISFETCHING,
+    isFetching: boolean
+}
+export const setIsFetching = (isFetching:boolean):IsFetchingType => {
     return {
         type: SETISFETCHING,
         isFetching
     }
 }
-export const setIsDisabled = (userId,prop) => {
+
+type isDisabledType = {
+    type: typeof SETDISABLED,
+    userId: number,
+    prop: boolean
+}
+export const setIsDisabled = (userId:number,prop:boolean):isDisabledType => {
     return {
         type: SETDISABLED,
         userId,
@@ -119,24 +158,24 @@ export const setIsDisabled = (userId,prop) => {
     }
 }
 
-export const getUsers = (onPageUsers, currentPage) => async (dispatch) => {
+export const getUsers = (onPageUsers:number, currentPage:number) => async (dispatch:any) => {
     dispatch(setIsFetching(true));
     const data = await usersAPI.getUsers(onPageUsers, currentPage)
     dispatch(setIsFetching(false))
     dispatch(setPageCount(data.totalCount));
     dispatch(setUsers(data.items));
 }
-export const getFollow = (userId) => async (dispatch) => {
+export const getFollow = (userId:number) => async (dispatch:any) => {
     dispatch(setIsDisabled(userId, true));
-    const data = await usersAPI.followUsers(userId,{})
+    const data = await usersAPI.followUsers(userId)
     if(data.resultCode === 0) {
         dispatch(follow(userId));
         dispatch(setIsDisabled(userId, false));
     }
 }
-export const getUnfollow = (userId) => async (dispatch) => {
+export const getUnfollow = (userId:number) => async (dispatch:any) => {
     dispatch(setIsDisabled(userId, true));
-    const data = await usersAPI.unfollowUsers(userId,{});
+    const data = await usersAPI.unfollowUsers(userId);
     if(data.resultCode === 0) {
         dispatch(unFollow(userId));
         dispatch(setIsDisabled(userId, false));

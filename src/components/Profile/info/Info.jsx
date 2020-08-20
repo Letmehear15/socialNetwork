@@ -20,27 +20,25 @@ const Info = memo(({profile, changePhoto, params}) => {
     }
     return (
         <div className={classes.info}>
-            <div className={classes.left}>
-                {isLoad&&<Loader/>}
-                {!isLoad&&
-                    <div 
-                        className={classes.img} 
-                        onMouseEnter={() => setOnMouse(true)}
-                        onMouseLeave={() => setOnMouse(false)}
-                    >
-                        <img src={photos.large?photos.large:userLogo} alt='largePhoto'/>
-                        <input className={classes.upLoad} id="upload" type="file" onChange={onSave}/>
+            {isLoad&&<Loader/>}
+            {!isLoad&&
+                <div 
+                    className={classes.img} 
+                    onMouseEnter={() => setOnMouse(true)}
+                    onMouseLeave={() => setOnMouse(false)}
+                >
+                    <img src={photos.large?photos.large:userLogo} alt='largePhoto'/>
+                    <input className={classes.upLoad} id="upload" type="file" onChange={onSave}/>
 
-                        <div className={params.id?classes.none:''}>
-                            <label 
-                                htmlFor="upload" 
-                                className={`${classes.labelUpload} ${onMouse?classes.active:''}`}>
-                                    Upload Photo
-                            </label>
-                        </div>
+                    <div className={params.id?classes.none:''}>
+                        <label 
+                            htmlFor="upload" 
+                            className={`${classes.labelUpload} ${onMouse?classes.active:''}`}>
+                                Upload Photo
+                        </label>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     )
 })

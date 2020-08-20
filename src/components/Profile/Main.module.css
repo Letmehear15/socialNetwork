@@ -1,4 +1,10 @@
-main {
-    flex-grow: 2;
+.main {
+    width: 65%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rigthSide {
+    margin-top: 20px;
 }
 

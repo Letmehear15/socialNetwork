@@ -7,7 +7,7 @@ import About from './info/About';
 const Profile = ({profile, status, changeStatus, changePhoto, match:{params}, updateProfile, myId}) => {
 
     return (
-        <main>
+        <main className={c.main}>
             <div className={c.leftSide}>
                 <Info 
                     profile={profile}
